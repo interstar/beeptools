@@ -14,7 +14,7 @@ class Database {
         $pwd=$pw; // password
 
         mysql_connect("$host", "$user", "$pwd")or die("cannot connect"); 
-        mysql_select_db("$db")or die("cannot select DB");
+        mysql_select_db("$db")or die("cannot select DB");        
     }
     
 }

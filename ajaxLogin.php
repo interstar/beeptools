@@ -5,7 +5,7 @@
     
     $user = new User($name,$pwd);
 
-    if ($user.login()) {
+    if ($user->login()) {
         $result = array("login"=>1);
     } else {
         $result = array("login"=>0);       

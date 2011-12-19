@@ -8,13 +8,20 @@ class User {
     public $loggedIn;
     
     function login() {
+        // db login
+        $setup = new Setup();
+        $db = new Database($setup->host,$setup->db,$setup->user,$setup->pwd);
 
-        // encryption
-        $settings = Setup();
-        $cPwd = crypt($pwd,$settings.salt);
+        $name = mysql_real_escape_string($this->name);
+        $pwd = mysql_real_escape_string($this->pwd);
+
+        $cPwd = crypt($this->pwd,$setup->salt);
         
-        // db
-        $sql="SELECT * FROM $tbl_name WHERE username='$name' and password='$cPwd'";
+        //temporary for testings
+          $cPwd = $this->pwd;
+        //  
+        
+        $sql="SELECT * FROM users WHERE username='$name' and password='$cPwd'";    
         $result=mysql_query($sql);
 
         // Mysql_num_row is counting table row
@@ -30,15 +37,14 @@ class User {
     }
     
     function __construct($n, $p) {        
-        // To protect MySQL injection
-        $name = stripslashes($n);
-        $pwd = stripslashes($p);
-        $name = mysql_real_escape_string($name);
-        $pwd = mysql_real_escape_string($pwd);           
+        $this->name = stripslashes($n);
+        $this->pwd = stripslashes($p);
     }
-    
+
+
 }
 
+/*
 
 function createUserTable() {
     CREATE TABLE `users` (
@@ -48,18 +54,6 @@ function createUserTable() {
     PRIMARY KEY (`id`)
     ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 }
-
-
-function createUsersDatabase() {
-    $db = new Database($setupHost,$setupDB,$setupUser,$setupPwd);
-    createUserTable();
-}
-
-
-function loginForm() {
-}
-
+*/
 
 ?>
-
-
